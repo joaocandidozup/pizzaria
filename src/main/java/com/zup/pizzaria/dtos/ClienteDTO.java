@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public class ClienteDTO {
-    @NotBlank(message = "O nome é obrigatório.")
+    @NotBlank(message = "O nome não pode ser vazio ou nulo.")
     private String nome;
 
     @NotBlank(message = "O e-mail é obrigatório.")
