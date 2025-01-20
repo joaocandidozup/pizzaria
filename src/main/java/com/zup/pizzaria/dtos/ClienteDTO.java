@@ -38,11 +38,11 @@ public class ClienteDTO {
     }
 
 
-    public static Cliente converterEntidadeParaDto(ClienteDTO dto) {
+    public static Cliente converterDtoParaEntidade(ClienteDTO dto) {
         return new Cliente(dto.getNome(), dto.getEmail(), dto.getTelefone());
     }
 
-    public static ClienteDTO converterDtoParaEntidade(Cliente cliente) {
+    public static ClienteDTO converterEntidadeParaDto(Cliente cliente) {
         return new ClienteDTO(cliente.getNome(), cliente.getEmail(), cliente.getTelefone());
     }
 }
