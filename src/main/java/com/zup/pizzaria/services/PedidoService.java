@@ -1,10 +1,11 @@
 package com.zup.pizzaria.services;
 
 import com.zup.pizzaria.dtos.PedidoDTO;
-import com.zup.pizzaria.models.Cliente;
 import com.zup.pizzaria.models.Pedido;
 import com.zup.pizzaria.repository.ClienteRepository;
 import com.zup.pizzaria.repository.PedidoRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,15 +18,15 @@ public class PedidoService {
         this.clienteRepository = clienteRepository;
     }
 
-    public PedidoDTO criarPedido(Pedido pedido) {
-        // Salva pedido
-        pedidoRepository.save(pedido);
+    @Transactional
+    public PedidoDTO criarPedido(PedidoDTO pedidoDTO) {
+        clienteRepository.findById(pedidoDTO.getClienteId())
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
 
-        // Obtenho cliente
-        Cliente cliente = clienteRepository
-                .findById(pedido.getClienteId())
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        Pedido pedido = PedidoDTO.converterDtoParaEntidade(pedidoDTO);
 
-        return new PedidoDTO(cliente.getNome(), cliente.getEmail(), pedido.getDescricao());
+        Pedido pedidoSalvo = pedidoRepository.save(pedido);
+
+        return PedidoDTO.converterEntidadeParaDto(pedidoSalvo);
     }
 }
