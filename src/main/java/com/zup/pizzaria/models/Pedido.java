@@ -1,44 +1,39 @@
 package com.zup.pizzaria.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "pedidos")
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String descricao;
+
     private Long clienteId;
 
-    public Pedido(Long clienteId, String descricao) {
+    private Double valorTotal;
+
+
+    public Pedido() {
+    }
+
+    public Pedido(Long clienteId, String descricao,Double valorTotal) {
         this.clienteId = clienteId;
         this.descricao = descricao;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.valorTotal = valorTotal;
     }
 
     public String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     public Long getClienteId() {
         return clienteId;
     }
 
-    public void setClienteId(Long clienteId) {
-        this.clienteId = clienteId;
+    public Double getValorTotal() {
+        return valorTotal;
     }
 }
