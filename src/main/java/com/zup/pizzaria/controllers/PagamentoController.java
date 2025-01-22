@@ -1,6 +1,7 @@
 package com.zup.pizzaria.controllers;
 
 import com.zup.pizzaria.dtos.PagamentoDTO;
+import com.zup.pizzaria.responses.ApiResponse;
 import com.zup.pizzaria.services.PagamentoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +15,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class PagamentoController {
     private final PagamentoService pagamentoService;
 
-
     public PagamentoController(PagamentoService pagamentoService) {
         this.pagamentoService = pagamentoService;
     }
 
     @PostMapping
-    public ResponseEntity<PagamentoDTO> realizarPagamento(@RequestBody PagamentoDTO pagamento) {
-        PagamentoDTO pagamentoDTO = pagamentoService.realizarPagamento(pagamento);
-        return ResponseEntity.status(HttpStatus.CREATED).body(pagamentoDTO);
+    public ResponseEntity<ApiResponse<PagamentoDTO>> realizarPagamento(@RequestBody PagamentoDTO pagamentoDTO) {
+        PagamentoDTO pagamentoCriado = pagamentoService.realizarPagamento(pagamentoDTO);
+
+        ApiResponse<PagamentoDTO> response = new ApiResponse<>(
+                "success",
+                "pagamento realizado com sucesso!",
+                pagamentoCriado
+        );
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 }
