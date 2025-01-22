@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public class PedidoDTO {
+    private Long id;
     @NotNull(message = "O id não pode estar em branco ou ser nulo")
     private Long clienteId;
 
@@ -16,30 +17,32 @@ public class PedidoDTO {
     @Positive(message = "O valor total tem que ser um inteiro positivo")
     private Double valorTotal;
 
-    public PedidoDTO(Long clienteId, String descricaoPedido, Double valorTotal) {
+    public PedidoDTO(Long id,Long clienteId, String descricaoPedido, Double valorTotal) {
         this.clienteId = clienteId;
         this.descricaoPedido = descricaoPedido;
         this.valorTotal = valorTotal;
+        this.id = id;
     }
 
     public Long getClienteId() {
         return clienteId;
     }
-
     public String getDescricaoPedido() {
         return descricaoPedido;
     }
-
     public Double getValorTotal() {
         return valorTotal;
     }
 
+    public Long getId() {
+        return id;
+    }
 
     public static Pedido converterDtoParaEntidade(PedidoDTO dto){
         return new Pedido(dto.getClienteId(), dto.getDescricaoPedido(),dto.getValorTotal());
     }
 
     public static PedidoDTO converterEntidadeParaDto(Pedido pedido){
-        return new PedidoDTO(pedido.getClienteId(), pedido.getDescricao(), pedido.getValorTotal());
+        return new PedidoDTO(pedido.getId(),pedido.getClienteId(), pedido.getDescricao(), pedido.getValorTotal());
     }
 }

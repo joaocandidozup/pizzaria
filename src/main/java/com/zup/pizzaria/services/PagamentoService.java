@@ -19,6 +19,7 @@ public class PagamentoService {
         this.pagamentoRepository = pagamentoRepository;
         this.pedidoRepository = pedidoRepository;
     }
+
     @Transactional
     public PagamentoDTO realizarPagamento(PagamentoDTO pagamentoDTO) {
 
@@ -30,15 +31,10 @@ public class PagamentoService {
         if (pagamentoDTO.getValorPago() < pedido.getValorTotal()) {
             throw new IllegalArgumentException("O valor pago não pode ser menor que o valor total do pedido.");
         }
-        Pagamento pagamento = new Pagamento();
-        pagamento.setPedidoId(pagamentoDTO.getPedidoId());
-        pagamento.setFormaPagamento(pagamentoDTO.getFormaPagamento());
-        pagamento.setValorPago(pagamentoDTO.getValorPago());
-        pagamento.setDataHoraPagamento(LocalDateTime.now());
 
+        Pagamento pagamento = PagamentoDTO.converterDtoParaEntidade(pagamentoDTO);
+        Pagamento pagamentoSalvo = pagamentoRepository.save(pagamento);
 
-        pagamentoRepository.save(pagamento);
-
-        return new PagamentoDTO(pagamento.getPedidoId(),pagamento.getFormaPagamento(),pagamento.getValorPago());
+        return PagamentoDTO.converterEntidadeParaDto(pagamentoSalvo);
     }
 }

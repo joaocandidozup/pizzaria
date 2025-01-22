@@ -8,13 +8,9 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String descricao;
-
     private Long clienteId;
-
     private Double valorTotal;
-
 
     public Pedido() {
     }
@@ -28,12 +24,13 @@ public class Pedido {
     public String getDescricao() {
         return descricao;
     }
-
     public Long getClienteId() {
         return clienteId;
     }
-
     public Double getValorTotal() {
         return valorTotal;
+    }
+    public Long getId() {
+        return id;
     }
 }
