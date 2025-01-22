@@ -24,7 +24,6 @@ public class PedidoService {
                 .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
 
         Pedido pedido = PedidoDTO.converterDtoParaEntidade(pedidoDTO);
-
         Pedido pedidoSalvo = pedidoRepository.save(pedido);
 
         return PedidoDTO.converterEntidadeParaDto(pedidoSalvo);
